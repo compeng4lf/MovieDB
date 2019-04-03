@@ -17,7 +17,7 @@ import static android.content.ContentValues.TAG;
 public class NetworkUtils {
 
     //API KEY USED FOR MOVIEDB
-    final static String APIKEY = "cebd81e6a6caa22a6d494370c5afe97b" ;
+    final static String APIKEY = "" ;
 
     //BASE URL WE USE FOR GETTING MOVIE INFORMATION
     final static String BASE_URL = "https://api.themoviedb.org/3/movie";
