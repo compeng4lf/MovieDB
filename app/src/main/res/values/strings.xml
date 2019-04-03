@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
+    <string name="app_name">Popular Movies</string>
+    <string name="popular">Sort: Popular</string>
+    <string name="toprated">Sort: Top Rated</string>
+    <string name="api_key"></string>
+
+
+</resources>
