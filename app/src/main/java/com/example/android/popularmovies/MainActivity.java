@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
-
         FetchGridLayout fgl = new FetchGridLayout();
         fgl.execute();
     }
@@ -82,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setHasFixedSize(true);
                 mAdapter = new MovieGridAdapter(movieData, getApplicationContext(), this);
                 recyclerView.setAdapter(mAdapter);
+
+
                 }
             else
                 showErrormessage();

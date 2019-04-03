@@ -21,8 +21,7 @@ public class parseMovieJson {
         String Overview;
         Number vote_average;
         String release_date;
-
-        final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500/";
+        final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w185/";
 
 
         try {
