@@ -16,35 +16,27 @@ import static android.content.ContentValues.TAG;
 
 public class NetworkUtils {
 
+    //API KEY USED FOR MOVIEDB
+    final static String APIKEY = "cebd81e6a6caa22a6d494370c5afe97b" ;
 
-    final static String APIKEY = "";
+    //BASE URL WE USE FOR GETTING MOVIE INFORMATION
+    final static String BASE_URL = "https://api.themoviedb.org/3/movie";
 
-
-    final static String BASE_URL = "https://api.themoviedb.org/3/movie/popular?";
-
-
-    final static String SORTBY_PARAM = "sort_by";
+    //PARAMETERS FOR THE URL
     final static String API_PARAM = "api_key";
-    final static String INCLUDEVIDEO_PARAM = "include_video";
     final static String LANGUAGE_PARAM = "language";
-    final static String INCLUDEADULT_PARAM = "include_adult";
     final static String PAGE_PARAM = "page";
-
-    final static String popularsort = "popularity.desc";
-    final static String topcountsort = "vote_count.desc";
-    final static String optionaldefaults = "false";
     final static String language = "en-US";
     final static String page = "1";
 
 
-    public static URL buildUrl() {
+    public static URL buildUrl(String sortby) {
+
 
         Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                .appendPath(sortby)
                 .appendQueryParameter(API_PARAM, APIKEY)
                 .appendQueryParameter(LANGUAGE_PARAM, language)
-                //.appendQueryParameter(SORTBY_PARAM, popularsort)
-                //.appendQueryParameter(INCLUDEADULT_PARAM, optionaldefaults)
-                //.appendQueryParameter(INCLUDEVIDEO_PARAM, optionaldefaults)
                 .appendQueryParameter(PAGE_PARAM, page)
                 .build();
 

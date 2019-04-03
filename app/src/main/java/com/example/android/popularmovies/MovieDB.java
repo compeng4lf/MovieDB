@@ -1,19 +1,17 @@
 package com.example.android.popularmovies;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MovieDB {
+public class MovieDB implements Serializable {
 
     private String Title;
     private String Posterpath;
     private String Overview;
     private Number vote_average;
     private String release_date;
-    private int totalResults;
 
-    /**
-     * No args constructor for use in serialization
-     */
+
     public MovieDB() {
     }
 

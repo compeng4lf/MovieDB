@@ -19,11 +19,17 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
 
     ArrayList<MovieDB> movielist;
     Context context;
+    final private ListItemClickListener mOnClickListener;
 
-    public MovieGridAdapter(ArrayList<MovieDB> movielist, Context context){
+    public interface ListItemClickListener{
+        public void onListItemClick(int clickedItemIndex);
+    }
+
+    public MovieGridAdapter(ArrayList<MovieDB> movielist, Context context, ListItemClickListener listItemClickListener){
 
         this.movielist = movielist;
         this.context = context;
+        mOnClickListener = listItemClickListener;
 
     }
 
@@ -42,16 +48,11 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
     @Override
     public void onBindViewHolder(@NonNull MovieviewHolder viewHolder, int position) {
 
-        viewHolder.tvTitle.setText(movielist.get(position).getTitle()); //Get the movie title out the array
-
 
         //ADD PICASSO TO LOAD IMAGES
-
         Picasso.get()
                 .load(movielist.get(position).getPosterpath())
                 .into(viewHolder.imgPoster);
-
-
     }
 
     @Override
@@ -59,16 +60,28 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
         return movielist.size(); //MovieList needs to be an ArrayList
     }
 
-    public static class MovieviewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvTitle;
+
+    public class MovieviewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
         ImageView imgPoster;
 
         public MovieviewHolder(@NonNull View itemView) {
             super(itemView);
 
             imgPoster = itemView.findViewById(R.id.iv_MoviePoster);
-            tvTitle = itemView.findViewById(R.id.tv_MovieName);
+            itemView.setOnClickListener(this);
+        }
+
+        /**
+         * Called when a view has been clicked.
+         *
+         * @param v The view that was clicked.
+         */
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            mOnClickListener.onListItemClick(clickedPosition);
         }
     }
 }

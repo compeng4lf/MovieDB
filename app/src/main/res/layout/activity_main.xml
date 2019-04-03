@@ -2,24 +2,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     tools:context=".MainActivity">
 
     <ProgressBar
         android:id="@+id/pb_loading_indicator"
-        android:layout_height="42dp"
         android:layout_width="42dp"
+        android:layout_height="42dp"
         android:layout_gravity="center"
         android:visibility="invisible" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_MovieGrid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/rv_moviegrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layoutManager="android.support.v7.widget.GridLayoutManager"
-        app:spanCount="3">
+        app:spanCount="2"
+        tools:listitem="@layout/rv_moviegrid">
 
 
     </android.support.v7.widget.RecyclerView>

@@ -1,6 +1,9 @@
 package com.example.android.popularmovies;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -22,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mLoadingIndicator;
     private MenuItem mPopular;
     private MenuItem mToprated;
+    private String mSortPath = "popular";
+    private String jsonMovieResponse;
+    private ArrayList<MovieDB> simpleJsonMovieData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +39,11 @@ public class MainActivity extends AppCompatActivity {
 
         FetchGridLayout fgl = new FetchGridLayout();
         fgl.execute();
-
-
     }
 
 
 
-    public class FetchGridLayout extends AsyncTask<Void, Void, ArrayList<MovieDB>>{
+    public class FetchGridLayout extends AsyncTask<Void, Void, ArrayList<MovieDB>> implements MovieGridAdapter.ListItemClickListener{
 
         @Override
         protected void onPreExecute() {
@@ -49,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
         protected ArrayList<MovieDB> doInBackground(Void... voids) {
 
 
-            URL MovieGridURL = NetworkUtils.buildUrl();
+            URL MovieGridURL = NetworkUtils.buildUrl(mSortPath);
 
             try {
-                String jsonMovieResponse = NetworkUtils
+                jsonMovieResponse = NetworkUtils
                         .getResponseFromHttpUrl(MovieGridURL);
 
-                ArrayList<MovieDB> simpleJsonMovieData = parseMovieJson
+                simpleJsonMovieData = parseMovieJson
                         .parseMovieJson(jsonMovieResponse);
 
                 return simpleJsonMovieData;
@@ -68,18 +74,31 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<MovieDB> movieData) {
-            if (movieData != null) {
-                mLoadingIndicator.setVisibility(View.INVISIBLE);
+
+            mLoadingIndicator.setVisibility(View.INVISIBLE);
+
+            if (movieData.size() != 0) {
                 recyclerView = (RecyclerView) findViewById(R.id.rv_MovieGrid);
-
                 recyclerView.setHasFixedSize(true);
-
-                mAdapter = new MovieGridAdapter(movieData, getApplicationContext());
+                mAdapter = new MovieGridAdapter(movieData, getApplicationContext(), this);
                 recyclerView.setAdapter(mAdapter);
-
                 }
+            else
+                showErrormessage();
             }
+
+        @Override
+        public void onListItemClick(int clickedItemIndex) {
+
+            MovieDB intentdataholder = new MovieDB();
+            intentdataholder = simpleJsonMovieData.get(clickedItemIndex);
+            Context context = MainActivity.this;
+            Class destinationActivity = DetailViewActivity.class;
+            Intent intent = new Intent(context, destinationActivity);
+            intent.putExtra("MovieDetails", intentdataholder);
+            startActivity(intent);
         }
+    }
 
 
     @Override
@@ -96,27 +115,35 @@ public class MainActivity extends AppCompatActivity {
 
         switch (itemThatWasClickedId){
             case R.id.action_popular:
+                mSortPath = "popular";
                 item.setChecked(true);
                 mToprated.setChecked(false);
-                FetchGridLayout fgl = new FetchGridLayout();
-                fgl.execute();
+                //Toast.makeText(this, "Sorting by Most Popular Movies", Toast.LENGTH_SHORT).show();
+                FetchGridLayout PopularLayout = new FetchGridLayout();
+                PopularLayout.execute();
                 return true;
 
             case R.id.action_toprated:
-                Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_LONG).show();
+                mSortPath = "top_rated";
+                //Toast.makeText(this, "Sorting by Top Rated Movies", Toast.LENGTH_SHORT).show();
                 item.setChecked(true);
                 mPopular.setChecked(false);
-
-
-
+                FetchGridLayout TopRatedLayout = new FetchGridLayout();
+                TopRatedLayout.execute();
                 return true;
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
+    public void showErrormessage(){
+
+        Toast.makeText(this, R.string.error_message, Toast.LENGTH_LONG).show();
+
     }
+
+
+
+}
 
 
 
