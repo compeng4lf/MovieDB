@@ -32,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/header"
+        android:layout_marginTop="0dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -58,7 +59,8 @@
                 android:layout_toRightOf="@+id/iv_Poster"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_voteavg"
@@ -70,21 +72,111 @@
                 android:textStyle="bold" />
 
 
+            <Button
+                android:id="@+id/btnFavorite"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/tv_voteavg"
+                android:layout_alignStart="@+id/tv_releasedate"
+                android:layout_alignLeft="@+id/tv_releasedate"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center|center_vertical"
+                android:singleLine="false"
+                android:text="@string/btnFavorite"
+                android:textColor="@android:color/background_light"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnUnFavorite"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/tv_voteavg"
+                android:layout_alignStart="@+id/tv_releasedate"
+                android:layout_alignLeft="@+id/tv_releasedate"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center|center_vertical"
+                android:singleLine="false"
+                android:text="@string/btn_remove_from_favorites"
+                android:textColor="@android:color/background_light"
+                android:textSize="10sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_Poster"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_overview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="left"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/ivDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@android:color/background_dark"
+                    app:srcCompat="@android:drawable/divider_horizontal_bright" />
+
+                <TextView
+                    android:id="@+id/tvTrailer_Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/trailers_label"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_trailer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:scrollbars="vertical"
+                    app:spanCount="2"
+                    tools:listitem="@layout/rv_trailer">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/tvReviewsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="25" />
+                    android:layout_marginTop="5dp"
+                    android:text="@string/reviews_label"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+                    tools:listitem="@layout/rv_reviews" />
+
             </LinearLayout>
+
         </RelativeLayout>
 
     </ScrollView>

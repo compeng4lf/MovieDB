@@ -18,6 +18,15 @@
             android:orderInCategory="1"
             android:title="@string/popular" />
     </group>
+    <group android:id="@+id/groupFavorite" >
+        <item
+            android:id="@+id/action_favorite"
+            android:checkable="false"
+            android:checked="false"
+            android:contentDescription="Favorites"
+            android:enabled="true"
+            android:title="@string/favorites_menu_label" />
+    </group>
 
 
 </menu>

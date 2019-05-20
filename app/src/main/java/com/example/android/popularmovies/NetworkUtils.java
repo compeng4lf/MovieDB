@@ -1,20 +1,21 @@
 package com.example.android.popularmovies;
 
+
 import android.net.Uri;
 import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
-import java.util.Scanner;
-
 import static android.content.ContentValues.TAG;
 
 public class NetworkUtils {
+
+
 
     //API KEY USED FOR MOVIEDB
     final static String APIKEY = "" ;
@@ -32,13 +33,41 @@ public class NetworkUtils {
 
     public static URL buildUrl(String sortby) {
 
+        Uri builtUri = null;
+        if (sortby.contains("reviews")){
+            String MovieId = sortby.replace("reviews", "");
+            String Action = "reviews";
+            builtUri = Uri.parse(BASE_URL).buildUpon()
+                    .appendPath(MovieId)
+                    .appendPath(Action)
+                    .appendQueryParameter(API_PARAM, APIKEY)
+                    .appendQueryParameter(LANGUAGE_PARAM, language)
+                    .appendQueryParameter(PAGE_PARAM, page)
+                    .build();
 
-        Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                .appendPath(sortby)
-                .appendQueryParameter(API_PARAM, APIKEY)
-                .appendQueryParameter(LANGUAGE_PARAM, language)
-                .appendQueryParameter(PAGE_PARAM, page)
-                .build();
+        }
+        else if (sortby.contains("videos")){
+            String MovieId = sortby.replace("videos", "");
+            String Action = "videos";
+            builtUri = Uri.parse(BASE_URL).buildUpon()
+                    .appendPath(MovieId)
+                    .appendPath(Action)
+                    .appendQueryParameter(API_PARAM, APIKEY)
+                    .appendQueryParameter(LANGUAGE_PARAM, language)
+                    // .appendQueryParameter(PAGE_PARAM, page)
+                    .build();
+        }
+        else {
+
+            //Build URL for MovieDB API
+            builtUri = Uri.parse(BASE_URL).buildUpon()
+                    .appendPath(sortby)
+                    .appendQueryParameter(API_PARAM, APIKEY)
+                    .appendQueryParameter(LANGUAGE_PARAM, language)
+                    .appendQueryParameter(PAGE_PARAM, page)
+                    .build();
+
+        }
 
         URL url = null;
         try {
@@ -52,34 +81,26 @@ public class NetworkUtils {
 
 
     public static String getResponseFromHttpUrl(URL url) throws IOException {
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
+        //HTTP Fetch MovieDB
         String inputLine="";
-
+        HttpURLConnection urlConnection = null;
 
         try {
-            int status = urlConnection.getResponseCode();
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+            //int status = urlConnection.getResponseCode();
 
             BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-
             inputLine = in.readLine();
 
-
-
             }
-
             catch (IOException e){
-
                 Log.d(TAG,e.getMessage());
-
             }
-
-
-
         finally{
             urlConnection.disconnect();
         }
-
         return inputLine;
     }
 }

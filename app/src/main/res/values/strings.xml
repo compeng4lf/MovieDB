@@ -4,13 +4,23 @@
     <string name="app_name">Popular Movies</string>
     <string name="popular">Sort: Popular</string>
     <string name="toprated">Sort: Top Rated</string>
-
-    <string name="error_message">There is a connectivity issue.  Please wait and app will try to refresh in 10 seconds</string>
+    <string name="error_message">There is a connectivity issue.</string>
     <string name="detailview_title">Title</string>
     <string name="detailview_overview">Overview</string>
     <string name="detailview_voter_average">Voter Average</string>
     <string name="detailview_release_date">Release Date</string>
     <string name="detailview_movie_poster">Movie Poster</string>
+    <string name="refresh">REFRESH</string>
+    <string name="TVConnectivity">There is a connectivity issue!  Check your mobile or WiFi connection and press REFRESH</string>
+    <string name="trailers_label">Trailers:</string>
+    <string name="reviews_label">Reviews:</string>
+    <string name="contributor_label">Contributor:</string>
+    <string name="review_label">Review:</string>
+    <string name="url_label">URL:</string>
+    <string name="btnFavorite">MARK AS FAVORITE</string>
+    <string name="favorites_menu_label">Favorites</string>
+    <string name="btn_remove_from_favorites">REMOVE FROM FAVORITES</string>
+    <string name="tv_NoFaves">There are no favorites in your list.</string>
 
 
 </resources>
